@@ -12,6 +12,8 @@ function Header() {
             <Link to ="/"  className="text-gray-700 hover:text-blue-600">Home</Link>
             <Link to ="/about"  className="text-gray-700 hover:text-blue-600">About Us</Link> 
             <Link to ="/contact"  className="text-gray-700 hover:text-blue-600">Contact Us</Link> 
+            <Link to="/login" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"> Signup / Login
+            </Link>
         </nav>
     </header>
   )
