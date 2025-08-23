@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Name:", name, "Email:", email, "Password:", password);
+    navigate("/dashboard");
   };
 
   return (
@@ -20,7 +22,7 @@ function SignUp() {
             <input type="text" placeholder="Full Name" className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" value={name} onChange={(e) => setName(e.target.value)} required />
             <input type="email" placeholder='Email' className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none' value={email} onChange={(e) => setEmail(e.target.value)}
             required></input>
-            <input type="password" placeholder='Password' className='w-full p-3 border rounded-lg focus:rinf-2 focus:ring-blue-500 outline-none' value={password}  onChange={(e) => setPassword(e.target.value)}
+            <input type="password" placeholder='Password' className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none' value={password}  onChange={(e) => setPassword(e.target.value)}
             required></input>
             <button type="submit" className='w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition'>Sign Up</button>
         </form>
