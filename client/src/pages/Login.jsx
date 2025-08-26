@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { useEffect } from 'react';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/dashboard')
+    }
+  }, [])
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -13,8 +21,9 @@ function Login() {
       const data = { email, password };
       const response = await axios.post('http://localhost:5000/api/user/signin', data);
       if (response.status == 200) {
-        localStorage.setItem('token',response.data.token);
+        localStorage.setItem('token', response.data.token);
         alert('Signed in successfully');
+        navigate('/dashboard')
       }
     } catch (error) {
       console.error("Error during signup:", error);

@@ -1,21 +1,21 @@
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
 
 function Profile() {
-    const {user, setUser}= useContext(UserContext);
-    const [name,setName]= useState(user.name);
-    const [email,setEmail]= useState(user.email);
-    const [skills, setSkills]= useState(user.skills.join(","));
+  const { user, setUser } = useContext(UserContext);
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [skills, setSkills] = useState(user.skills.join(","));
 
-    const handleSave=()=>{
-        setUser({
-            ...user,
-            name,
-            email,
-            skills: skills.split(",").map(s => s.trim())
-        });
-        alert("Profile Updated");
-    }
+  const handleSave = () => {
+    setUser({
+      ...user,
+      name,
+      email,
+      skills: skills.split(",").map(s => s.trim())
+    });
+    alert("Profile Updated");
+  }
   return (
     <div className="p-6">
       <h2 className='text-2xl font-bold mb-4'>Edit Profile</h2>

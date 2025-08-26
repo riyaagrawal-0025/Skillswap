@@ -1,7 +1,8 @@
 import express from 'express';
-import bcrypt from 'bcryptjs';
+import bcrypt, { decodeBase64 } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.post("/signup", async (req, res) => {
 
         res.status(201).json({ message: "user registered successfully" });
     } catch (error) {
+        console.error('Error in signup route', error)
         res.status(500).json({ message: "Server error" });
     }
 });
@@ -25,18 +27,36 @@ router.post("/signup", async (req, res) => {
 router.post('/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await User.find({ email });
+        console.log(email, password)
+        const user = await User.findOne({ email });
         if (!user) {
-            res.status(404).json({ "Message": "User does not exist!! Please signup!!" })
+            return res.status(404).json({ "Message": "User does not exist!! Please signup!!" })
         }
-        const isPasswordSame = await bcrypt.compare(user.password, password);
+        console.log(user)
+        const isPasswordSame = await bcrypt.compare(password, user.password);
         if (!isPasswordSame) {
-            res.status(403).json({ 'Message': 'Invalid Password!!' })
+            return res.status(403).json({ 'Message': 'Invalid Password!!' })
         }
-        const token = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        res.status(200).json({ 'Message': "Signed in successfully", token })
+        const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        return res.status(200).json({ 'Message': "Signed in successfully", token })
     } catch (error) {
         console.log('Error in signin', error);
         res.status(500).json({ 'Message': "Internal Server Error in signing in user!!" })
     }
 })
+
+router.get('/profile', authMiddleware, async (req, res) => {
+    try {
+        const email = req.email;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ 'Message': 'User not found!! Please signin!!' })
+        }
+        res.status(200).json({ 'Message': 'User found successfully!!', user });
+    } catch (error) {
+        console.log("error", error);
+        res.status(500).json({ 'Message': "Internal Server Error in signing in user!!" })
+    }
+})
+
+export default router;
