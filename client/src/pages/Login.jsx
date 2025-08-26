@@ -1,16 +1,24 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password);
-    if (email && password) {
-      navigate("/dashboard");
+    try {
+      const data = { email, password };
+      const response = await axios.post('http://localhost:5000/api/user/signin', data);
+      if (response.status == 200) {
+        localStorage.setItem('token',response.data.token);
+        alert('Signed in successfully');
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("An error occurred during signup. Please try again.");
     }
   };
 
