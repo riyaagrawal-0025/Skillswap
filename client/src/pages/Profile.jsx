@@ -26,7 +26,7 @@ function Profile() {
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
             <UserCircle size={64} className="text-gray-500" />
           </div>
-          <h2 className="text-2xl font-bold mt-4">Edit Profile</h2>
+          <h2 className="text-2xl font-bold mt-4">Profile</h2>
         </div>
 
         <div className="space-y-4">

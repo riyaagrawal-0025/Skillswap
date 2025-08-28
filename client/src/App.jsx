@@ -9,8 +9,7 @@ import SignUp from './pages/SignUp'
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import { UserProvider } from '../context/UserContext'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import Explore from './pages/Explore'
 
 function App() {
 
@@ -25,8 +24,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />}>
-          </Route>
+          <Route path="/profile" element={<Profile />}> </Route>
+          <Route path="/explore" element={<Explore/>}></Route>
+         
         </Routes>
       </Router>
     </UserProvider>

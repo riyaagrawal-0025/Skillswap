@@ -25,6 +25,8 @@ export const UserProvider = ({ children }) => {
         }
     }
 
+    
+
     useEffect(() => {
         getUserDetails();
     }, []);
